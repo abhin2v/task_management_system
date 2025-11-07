@@ -3,6 +3,7 @@ from sqlalchemy.exc import IntegrityError
 from app.models.task import Task
 from app.schemas.task import TaskCreate, TaskUpdate
 from app.constants.enums import TaskStatus
+from typing import Tuple, List, Optional
 
 class TaskRepository:
     def __init__(self, db: Session):
@@ -19,7 +20,7 @@ class TaskRepository:
             self.db.rollback()
             raise
 
-    def getAll(self, skip: int=0, limit: int=10, status_filter: TaskStatus=None) -> tuple[list[Task], int]:
+    def get_all(self, skip: int=0, limit: int=10, status_filter: TaskStatus=None) -> Tuple[List[Task], int]:
         query = self.db.query(Task) 
         if status_filter:
             query = query.filter(Task.status == status_filter)
@@ -29,11 +30,11 @@ class TaskRepository:
 
         return items, total
 
-    def getById(self, task_id: int) -> Task | None:
+    def get_by_id(self, task_id: int) -> Optional[Task]:
         return self.db.query(Task).filter(Task.id == task_id).first()
 
-    def update(self, task_id: int, task_update: TaskUpdate) -> Task | None:
-        db_task = self.getById(task_id)
+    def update(self, task_id: int, task_update: TaskUpdate) -> Optional[Task]:
+        db_task = self.get_by_id(task_id)
         if not db_task:
             return None
         
@@ -53,7 +54,7 @@ class TaskRepository:
             raise
 
     def delete(self, task_id: int) -> bool:
-        db_task = self.getById(task_id)
+        db_task = self.get_by_id(task_id)
         if not db_task:
             return False
         

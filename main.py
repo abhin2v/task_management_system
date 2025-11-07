@@ -1,10 +1,13 @@
 from fastapi import FastAPI, status
+from app.routes.task import router as task_router
 from app.database import Base, engine
 from app.models.task import Task
 
 Base.metadata.create_all(bind=engine)
 
 app = FastAPI(title="Task Manager API")
+
+app.include_router(task_router)
 
 @app.get("/")
 def read_root():

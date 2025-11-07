@@ -1,6 +1,6 @@
 from pydantic import BaseModel, Field
 from datetime import datetime
-from typing import Optional
+from typing import Optional, List
 from app.constants.enums import TaskStatus
 
 class TaskCreate(BaseModel):
@@ -28,4 +28,4 @@ class TaskListResponse(BaseModel):
     total: int
     skip: int
     limit: int
-    items: list[TaskResponse]
+    items: List[TaskResponse]
