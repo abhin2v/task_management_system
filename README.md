@@ -4,6 +4,11 @@ A FastAPI application for managing tasks with SQLAlchemy ORM and SQLite database
 
 ## Setup
 
+### 1. Git Clone
+```bash
+git clone git@github.com:abhin2v/task_management_system.git
+```
+
 ### 1. Install Dependencies
 ```bash
 python3 -m venv fastapi_env 
